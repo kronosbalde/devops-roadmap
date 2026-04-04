@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+# log-analyzer
+
+if [[ -z "$1" ]]; then
+    echo "ERROR: no log file specified"
+    echo "Usage: $0 /path/to/access.log"
+    exit 1
+fi
+
+if [[ ! -f "$1" ]]; then
+    echo "ERROR: $1 does not exist or is not a file"
+    exit 1
+fi
+
+log="$1"
+
+echo "Top 5 IP addresses with the most requests:"
+awk '{print $1}' "$log" | sort | uniq -c | sort -rn | head -5 | \
+    awk '{printf "%s - %s requests\n", $2, $1}'
