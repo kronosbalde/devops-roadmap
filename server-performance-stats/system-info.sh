@@ -13,15 +13,39 @@ get_cpu_usage() {
     echo $(( 100 * (total_delta - idle_delta) / total_delta ))
 }
 
+get_ram_usage() {
+    local total available used percent
+
+    total=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+    available=$(grep MemAvailable /proc/meminfo | awk '{print $2}')
+
+    used=$(( total - available ))
+    percent=$(( used * 100 / total ))
+
+    # Restituisce 4 valori su una riga separati da ":"
+    echo "$(( total / 1024 )):$(( used / 1024 )):$(( available / 1024 )):${percent}"
+}
+
 print_dashboard() {
-    local cpu
+    local cpu ram_raw
+    local ram_total ram_used ram_free ram_percent
+
     cpu=$(get_cpu_usage)
+    ram_raw=$(get_ram_usage)
+
+    # Split 4 values using ":"
+    IFS=':' read -r ram_total ram_used ram_free ram_percent <<< "$ram_raw"
 
     clear
     echo "================================"
     echo "       SYSTEM MONITOR           "
     echo "================================"
-    echo " CPU Usage : ${cpu}%"
+    echo " CPU Usage  : ${cpu}%"
+    echo "--------------------------------"
+    echo " RAM Total  : ${ram_total} MB"
+    echo " RAM Used   : ${ram_used} MB"
+    echo " RAM Free   : ${ram_free} MB"
+    echo " RAM Usage  : ${ram_percent}%"
     echo "================================"
     echo " [Ctrl+C to exit]"
 }
