@@ -36,3 +36,5 @@ Press `Ctrl+C` to exit.
 - Linux kernel (reads `/proc/stat`)
 - Linux kernel (reads `/proc/meminfo`)
 - No external dependencies
+
+https://roadmap.sh/projects/server-stats
