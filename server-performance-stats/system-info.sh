@@ -26,6 +26,11 @@ get_ram_usage() {
     echo "$(( total / 1024 )):$(( used / 1024 )):$(( available / 1024 )):${percent}"
 }
 
+get_top_processes() {
+    ps aux --sort=-%cpu | awk 'NR>1 {printf "%-25s %s%%\n", $11, $3}' | head -5
+}
+
+
 print_dashboard() {
     local cpu ram_raw
     local ram_total ram_used ram_free ram_percent
@@ -47,6 +52,10 @@ print_dashboard() {
     echo " RAM Free   : ${ram_free} MB"
     echo " RAM Usage  : ${ram_percent}%"
     echo "================================"
+    echo " TOP 5 PROCESSES (CPU)"
+    echo "--------------------------------"
+    get_top_processes
+    echo "--------------------------------"
     echo " [Ctrl+C to exit]"
 }
 
