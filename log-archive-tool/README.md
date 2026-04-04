@@ -4,19 +4,19 @@ A simple Bash script that creates a compressed archive of a specified directory 
 
 ## Usage
 ```bash
-./log-archive.sh /path/to/directory
+./log-archive /path/to/directory
 ```
 
 ## Example
 ```bash
-./log-archive.sh /var/log
+./log-archive /var/log
 ```
 
 ## ⚠️ Note
 
 Archiving `/var/log` requires root privileges, as most log files are only readable by root:
 ```bash
-sudo ./log-archive.sh /var/log
+sudo ./log-archive /var/log
 ```
 
 ## How it works
