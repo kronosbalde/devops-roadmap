@@ -38,4 +38,4 @@ Press `Ctrl+C` to exit.
 - No external dependencies
 
 
-[![roadmap.sh](https://roadmap.sh/projects/server-stats)](https://roadmap.sh)
+https://roadmap.sh/projects/server-stats
