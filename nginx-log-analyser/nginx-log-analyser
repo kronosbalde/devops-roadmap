@@ -1,19 +1,35 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # log-analyzer
 
 if [[ -z "$1" ]]; then
-    echo "ERROR: no log file specified"
-    echo "Usage: $0 /path/to/access.log"
+    echo "ERROR: nessun file di log specificato"
+    echo "Utilizzo: $0 /percorso/al/access.log"
     exit 1
 fi
 
 if [[ ! -f "$1" ]]; then
-    echo "ERROR: $1 does not exist or is not a file"
+    echo "ERROR: $1 non esiste o non è un file"
     exit 1
 fi
 
 log="$1"
 
-echo "Top 5 IP addresses with the most requests:"
+echo "========================================="
+echo "           Log Access Analyser           "
+echo "========================================="
+
+echo -e "\n[1] Top 5 indirizzi IP con il maggior numero di richieste:"
 awk '{print $1}' "$log" | sort | uniq -c | sort -rn | head -5 | \
-    awk '{printf "%s - %s requests\n", $2, $1}'
+    awk '{printf "%s - %s richieste\n", $2, $1}'
+
+echo -e "\n[2] Top 5 percorsi più richiesti:"
+awk '{print $7}' "$log" | sort | uniq -c | sort -rn | head -5 | \
+    awk '{printf "%s - %s\n", $2, $1}'
+
+echo -e "\n[3] Top 5 codici di stato di risposta:"
+awk '{print $9}' "$log" | sort | uniq -c | sort -rn | head -5 | \
+    awk '{printf "%s - %s\n", $2, $1}'
+
+echo -e "\n[4] Top 5 agenti utente:"
+awk -F'"' '{print $(NF-1)}' "$log" | sort | uniq -c | sort -rn | head -5 | \
+    awk '{printf "%s - %s\n", $2, $1}'
