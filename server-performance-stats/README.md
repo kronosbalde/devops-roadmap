@@ -16,7 +16,11 @@ More metrics (RAM, disk) are planned and will be added as separate functions.
 ## How it works
 
 The script takes two snapshots of `/proc/stat` one second apart, computes the difference in CPU time across all states (user, system, idle, iowait, etc.), and derives the usage percentage from that delta.
+
 For RAM usage, the script reads `/proc/meminfo` and extracts `MemTotal` and `MemAvailable`. Used RAM is calculated as the difference between the two, and the usage percentage is derived from that. All values are converted from kB to MB for readability.
+
+For process tracking, the script uses `ps aux` sorted by `%CPU` and `%MEM` respectively, displaying the top 5 most resource-intensive processes for each metric.
+
 
 ## Usage
 ```bash
