@@ -1,4 +1,4 @@
-# log-archive.sh
+# log-archive
 
 A simple Bash script that creates a compressed archive of a specified directory and saves it to a defined destination.
 
