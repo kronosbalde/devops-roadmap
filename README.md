@@ -37,6 +37,7 @@ This repo is the **scripting foundation** of that journey — going back to basi
 devops-roadmap/
 ├── linux/
 │   ├── system-monitor.sh   # Real-time system metrics via /proc
+│   └── log-archive-tool    # Archive logs
 │   └── ...
 └── README.md
 ```
@@ -50,3 +51,4 @@ devops-roadmap/
 
 ## 🔗 For roadmap.sh
 https://roadmap.sh/projects/server-stats
+https://roadmap.sh/projects/log-archive-tool
