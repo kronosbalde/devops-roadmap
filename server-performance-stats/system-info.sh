@@ -22,14 +22,16 @@ get_ram_usage() {
     used=$(( total - available ))
     percent=$(( used * 100 / total ))
 
-    # Restituisce 4 valori su una riga separati da ":"
     echo "$(( total / 1024 )):$(( used / 1024 )):$(( available / 1024 )):${percent}"
 }
 
-get_top_processes() {
+get_top_cpu_processes() {
     ps aux --sort=-%cpu | awk 'NR>1 {printf "%-25s %s%%\n", $11, $3}' | head -5
 }
 
+get_top_ram_processes() {
+    ps aux --sort=-%mem | awk 'NR>1 {printf "%-25s %s%%\n", $11, $4}' | head -5
+}
 
 print_dashboard() {
     local cpu ram_raw
@@ -54,8 +56,12 @@ print_dashboard() {
     echo "================================"
     echo " TOP 5 PROCESSES (CPU)"
     echo "--------------------------------"
-    get_top_processes
+    get_top_cpu_processes
+    echo "================================"
+    echo " TOP 5 PROCESSES (RAM)"
     echo "--------------------------------"
+    get_top_ram_processes
+    echo "================================"
     echo " [Ctrl+C to exit]"
 }
 
